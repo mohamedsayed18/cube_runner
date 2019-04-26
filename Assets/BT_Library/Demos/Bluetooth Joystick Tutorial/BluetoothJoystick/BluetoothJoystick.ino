@@ -4,7 +4,7 @@ int x1 = 0;                  // variable to read the value from the analog pin 0
 int x2 = 0;                  // variable to read the value from the analog pin 1 
 
 byte buf[5] ;
-
+byte color[4]={1,1,2,255};
 void setup() { 
   //the last byte equals 255, we will use it as a seperator between packets
   buf[4] = 255;
@@ -45,16 +45,18 @@ int fillBuffer(int x1, int x2) {
  
 void loop() { 
   // reads the value of the variable resistor 
-  x1 = analogRead(joyPin1);   
+  x1 = analogRead(joyPin1);
+   
   // this small pause is needed between reading 
   // analog pins, otherwise we get the same value twice 
   delay(100);             
   // reads the value of the variable resistor 
   x2 = analogRead(joyPin2);   
 
-  fillBuffer(x1,x2);
-  Serial.write(buf,5);
+  fillBuffer(x1,x2); //[x1_low, x1_high, x2_low, x3_high, 255]
+  Serial.write(color,4);
 
-  delay(100); 
+  delay(100);
+ 
 } 
 

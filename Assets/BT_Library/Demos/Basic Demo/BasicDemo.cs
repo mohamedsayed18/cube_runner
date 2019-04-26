@@ -30,7 +30,7 @@ public class BasicDemo : MonoBehaviour {
 		 */
 
 
-		device.Name = "HC-05";
+		//device.Name = "HC-05";
 		device.MacAddress = "20:16:03:07:13:26";
 
 
@@ -111,7 +111,7 @@ public class BasicDemo : MonoBehaviour {
             if (msg != null && msg.Length > 0)
             {
                 string content = System.Text.ASCIIEncoding.ASCII.GetString(msg);
-                statusText.text = "world " + content;
+                statusText.text = "MSG" + content;
             }
         }
     }

@@ -4,9 +4,9 @@ using UnityEngine.UI;
 using TechTweaking.Bluetooth;
 
 public class JoystickHandler : MonoBehaviour {
-	private  BluetoothDevice device;
-	public Text statusText;
-	public Text logsOnScreen; 
+	private  BluetoothDevice device;    //object of the class
+	public Text statusText; 
+	public Text logsOnScreen; //display distance
 
 	public Transform cube;
 
@@ -17,31 +17,12 @@ public class JoystickHandler : MonoBehaviour {
 		statusText.text = "Status : ...";
 		
 		BluetoothAdapter.enableBluetooth();//Force Enabling Bluetooth
-		
-		
 		device = new BluetoothDevice();
-		
-		/*
-		 * We need to identefy the device either by its MAC Adress or Name (NOT BOTH! it will use only one of them to identefy your device).
-		 */
-		device.Name = "HC-05";
-		//device.MacAddress = "XX:XX:XX:XX:XX:XX";
+		device.MacAddress = "20:16:03:07:13:26"; //the mac address specifiy your bluetooth
 
+		device.setEndByte (255); //specifiy the end of your packet, the read will read till it find a byte it's value equal to 255
 		
-		
-		/*
-		 * 10 equals the char '\n' which is a "new Line" in Ascci representation, 
-		 * so the read() method will retun a packet that was ended by the byte 10. simply read() will read lines.
-		 */
-		device.setEndByte (255);
-		
-		
-		/*
-		 * The ManageConnection Coroutine will start when the device is ready for reading.
-		 */
-		device.ReadingCoroutine = ManageConnection;
-		
-		
+		device.ReadingCoroutine = ManageConnection; // i will remove this and make it in update function
 	}
 	
 	public void connect() {
@@ -76,7 +57,7 @@ public class JoystickHandler : MonoBehaviour {
 				int size = packets.get_packet_size(N);
 					
 				if(size == 4){
-					// packets.Buffer[indx] equals lowByte(x1) and packets.Buffer[indx+1] equals highByte(x2)
+					// packets.Buffer[indx] equals lowByte(x1) and packets.Buffer[indx+1] equals highByte(x1)
 					int val1 =  (packets.Buffer[indx+1] << 8) | packets.Buffer[indx];
 					//Shift back 3 bits, because there was << 3 in Arduino
 					val1 = val1 >> 3;
