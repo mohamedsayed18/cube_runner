@@ -46,7 +46,7 @@ int fillBuffer(int x1, int x2) {
 void loop() { 
   // reads the value of the variable resistor 
   x1 = analogRead(joyPin1);
-   
+  color[0]=map(x1,0,1023,0,100); 
   // this small pause is needed between reading 
   // analog pins, otherwise we get the same value twice 
   delay(100);             

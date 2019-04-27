@@ -7,6 +7,7 @@ using TechTweaking.Bluetooth; //include the library
 
 //change the color on command
 //TODO ADD GUI BUTTONS to display messeges
+//Able to debug over android
 public class change : MonoBehaviour
 {
     //define some variables
@@ -23,6 +24,7 @@ public class change : MonoBehaviour
         device.setEndByte(255);
         device.ReadingCoroutine = null;
         device.connect(); //will be in a separate function and called when a button is pressed
+        Debug.Log("Awaken");
     }
 
     // Start is called before the first frame update
@@ -69,9 +71,17 @@ public class change : MonoBehaviour
                 int size = packets.get_packet_size(N);
 
                 if (packets.Buffer[indx] == 0)
+                {
                     thisRend.material.SetColor("_Color", Color.green);
+                    Debug.Log("what's up world");
+                }
+                   
                 else
+                {
                     thisRend.material.SetColor("_Color", Color.black);
+                    Debug.Log("Black");
+                }
+                    
             }
 
         }
